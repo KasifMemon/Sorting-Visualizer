@@ -7,8 +7,8 @@ To go to website [Click Here](https://kasifmemon.github.io/Sorting-Visualizer/)
 
 ## Screenshot
 
-![Screenshot-1] (./Screenshot/Screenshor1.png)
-![Screenshot-2] (./Screenshot/Screenshort2.png)
+![Screenshot-1](./Screenshot/Screenshot1.png)
+![Screenshot-2](./Screenshot/Screenshort2.png)
 
 
 ## Purpose
