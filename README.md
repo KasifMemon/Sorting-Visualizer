@@ -2,6 +2,9 @@
 
 This is a web application built using HTML, CSS, Javascript to visualize classic sorting algorithms such as bubble, insertion, selection, merge, quick 
 
+To go to website [Click Here](https://kasifmemon.github.io/Sorting-Visualizer/) 
+
+
 ## Screenshot
 
 ![Screenshot-1] (./Screenshot/Screenshot1.png)
