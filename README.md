@@ -25,3 +25,12 @@ This application supports the following sorting algorithms:
 3. **Selection Sort**.
 4. **Merge Sort**.
 5. **Quick Sort**.
+6. **Heap Sort** (advanced, optimized for large arrays).
+7. **Shell Sort** (advanced gap-based optimization).
+
+
+## New UI updates
+
+- Added a modern dark gradient layout with a dedicated Run Details panel.
+- Sorting controls now disable while sorting, to prevent conflicting actions.
+- Live run info now shows selected algorithm, speed, size, and status.
