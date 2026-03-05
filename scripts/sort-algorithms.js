@@ -232,4 +232,37 @@ class sortAlgorithms {
             largest = candidate;
         }
     }
+
+
+    // SHELL SORT
+    ShellSort = async () => {
+        for(let gap = Math.floor(this.size / 2); gap > 0; gap = Math.floor(gap / 2)) {
+            for(let i = gap; i < this.size; ++i) {
+                let j = i;
+                while(j - gap >= 0) {
+                    await this.help.mark(j);
+                    await this.help.mark(j-gap);
+                    let current = Number(this.list[j].getAttribute("value"));
+                    let compareWith = Number(this.list[j-gap].getAttribute("value"));
+                    if(compareWith > current) {
+                        await this.help.pause();
+                        await this.help.swap(j, j-gap);
+                        await this.help.unmark(j);
+                        await this.help.unmark(j-gap);
+                        j -= gap;
+                    }
+                    else {
+                        await this.help.unmark(j);
+                        await this.help.unmark(j-gap);
+                        break;
+                    }
+                }
+            }
+        }
+
+        for(let counter = 0 ; counter < this.size ; ++counter) {
+            this.list[counter].setAttribute("class", "cell done");
+        }
+    }
+
 };

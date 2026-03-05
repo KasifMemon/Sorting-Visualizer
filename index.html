@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
   <link rel="stylesheet" href="./css/style.css" />
@@ -30,17 +30,17 @@
           <option value="4">Merge Sort</option>
           <option value="5">Quick Sort</option>
           <option value="6">Heap Sort (Advanced)</option>
+          <option value="7">Shell Sort (Advanced)</option>
         </select>
       </span>
       <span class="options">
         <select name="select array size" id="menu" class="size-menu">
-          <option value="0">Array size</option>
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="15">15</option>
           <option value="20">20</option>
           <option value="30">30</option>
-          <option value="40">40</option>
+          <option value="40" selected>40</option>
           <option value="50">50</option>
           <option value="60">60</option>
           <option value="70">70</option>
@@ -51,10 +51,9 @@
       </span>
       <span class="options">
         <select name="speed of visualization" id="menu" class="speed-menu">
-          <option value="0">Speed</option>
           <option value="0.5">0.50x</option>
           <option value="0.75">0.75x</option>
-          <option value="1">1.00x</option>
+          <option value="1" selected>1.00x</option>
           <option value="2">2.00x</option>
           <option value="4">4.00x</option>
         </select>
@@ -63,9 +62,21 @@
       <a class="icon"><i class="fa fa-bars"></i></a>
     </div>
   </div>
-  <div class="center">
-    <div class="array"></div>
-  </div>
+
+  <main class="main-layout">
+    <section class="center">
+      <div class="array"></div>
+    </section>
+    <aside class="info-panel">
+      <h3>Run Details</h3>
+      <p><span>Algorithm:</span> <strong class="stat-algo">Not selected</strong></p>
+      <p><span>Status:</span> <strong class="stat-status">Ready</strong></p>
+      <p><span>Array Size:</span> <strong class="stat-size">40</strong></p>
+      <p><span>Speed:</span> <strong class="stat-speed">1.00x</strong></p>
+      <p class="tip">Tip: choose Heap or Shell Sort for larger arrays.</p>
+    </aside>
+  </main>
+
   <footer class="footer">
     <p>Created with <i class="fa fa-heart"></i> by kasif</p>
     <p>

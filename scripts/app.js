@@ -1,38 +1,73 @@
 "use strict";
+
+const ALGORITHMS = {
+  1: { name: "Bubble Sort", method: "BubbleSort" },
+  2: { name: "Selection Sort", method: "SelectionSort" },
+  3: { name: "Insertion Sort", method: "InsertionSort" },
+  4: { name: "Merge Sort", method: "MergeSort" },
+  5: { name: "Quick Sort", method: "QuickSort" },
+  6: { name: "Heap Sort (Advanced)", method: "HeapSort" },
+  7: { name: "Shell Sort (Advanced)", method: "ShellSort" }
+};
+
+const updateRunDetails = () => {
+  const algoValue = Number(document.querySelector(".algo-menu").value);
+  const sizeValue = document.querySelector(".size-menu").value;
+  const speedLabel = document.querySelector(".speed-menu").selectedOptions[0].text;
+
+  document.querySelector(".stat-algo").innerText =
+    ALGORITHMS[algoValue]?.name || "Not selected";
+  document.querySelector(".stat-size").innerText = sizeValue;
+  document.querySelector(".stat-speed").innerText = speedLabel;
+};
+
+const setControlsDisabled = (disabled) => {
+  document.querySelectorAll("select, .start, #random").forEach((node) => {
+    if (node.tagName === "SELECT") {
+      node.disabled = disabled;
+      return;
+    }
+    node.style.pointerEvents = disabled ? "none" : "auto";
+    node.style.opacity = disabled ? "0.6" : "1";
+  });
+};
+
 const start = async () => {
-  let algoValue = Number(document.querySelector(".algo-menu").value);
+  const algoValue = Number(document.querySelector(".algo-menu").value);
   let speedValue = Number(document.querySelector(".speed-menu").value);
 
-  if (speedValue === 0) {
-    speedValue = 1;
-  }
-  if (algoValue === 0) {
-    alert("No Algorithm Selected");
+  if (speedValue === 0) speedValue = 1;
+
+  if (algoValue === 0 || !ALGORITHMS[algoValue]) {
+    alert("Please choose an algorithm.");
     return;
   }
 
-  let algorithm = new sortAlgorithms(speedValue);
-  if (algoValue === 1) await algorithm.BubbleSort();
-  if (algoValue === 2) await algorithm.SelectionSort();
-  if (algoValue === 3) await algorithm.InsertionSort();
-  if (algoValue === 4) await algorithm.MergeSort();
-  if (algoValue === 5) await algorithm.QuickSort();
-  if (algoValue === 6) await algorithm.HeapSort();
+  updateRunDetails();
+  document.querySelector(".stat-status").innerText = "Sorting...";
+  setControlsDisabled(true);
+
+  try {
+    const algorithm = new sortAlgorithms(speedValue);
+    await algorithm[ALGORITHMS[algoValue].method]();
+    document.querySelector(".stat-status").innerText = "Completed";
+  } finally {
+    setControlsDisabled(false);
+  }
 };
 
 const RenderScreen = async () => {
-  let algoValue = Number(document.querySelector(".algo-menu").value);
   await RenderList();
+  updateRunDetails();
+  document.querySelector(".stat-status").innerText = "Ready";
 };
 
 const RenderList = async () => {
-  let sizeValue = Number(document.querySelector(".size-menu").value);
+  const sizeValue = Number(document.querySelector(".size-menu").value);
   await clearScreen();
 
-  let list = await randomList(sizeValue);
+  const list = await randomList(sizeValue);
   const arrayNode = document.querySelector(".array");
-  console.log(arrayNode);
-  console.log(list);
   for (const element of list) {
     const node = document.createElement("div");
     node.className = "cell";
@@ -42,36 +77,16 @@ const RenderList = async () => {
   }
 };
 
-const RenderArray = async (sorted) => {
-  let sizeValue = Number(document.querySelector(".size-menu").value);
-  await clearScreen();
+const randomList = async (length) => {
+  const list = [];
+  const lowerBound = 1;
+  const upperBound = 100;
 
-  let list = await randomList(sizeValue);
-  if (sorted) list.sort((a, b) => a - b);
-
-  const arrayNode = document.querySelector(".array");
-  const divnode = document.createElement("div");
-  divnode.className = "s-array";
-
-  for (const element of list) {
-    const dnode = document.createElement("div");
-    dnode.className = "s-cell";
-    dnode.innerText = element;
-    divnode.appendChild(dnode);
-  }
-  arrayNode.appendChild(divnode);
-};
-
-const randomList = async (Length) => {
-  let list = new Array();
-  let lowerBound = 1;
-  let upperBound = 100;
-
-  for (let counter = 0; counter < Length; ++counter) {
-    let randomNumber = Math.floor(
+  for (let counter = 0; counter < length; ++counter) {
+    const randomNumber = Math.floor(
       Math.random() * (upperBound - lowerBound + 1) + lowerBound
     );
-    list.push(parseInt(randomNumber));
+    list.push(randomNumber);
   }
   return list;
 };
@@ -81,16 +96,17 @@ const clearScreen = async () => {
 };
 
 const response = () => {
-  let Navbar = document.querySelector(".navbar");
-  if (Navbar.className === "navbar") {
-    Navbar.className += " responsive";
+  const navbar = document.querySelector(".navbar");
+  if (navbar.className === "navbar") {
+    navbar.className += " responsive";
   } else {
-    Navbar.className = "navbar";
+    navbar.className = "navbar";
   }
 };
 
 document.querySelector(".icon").addEventListener("click", response);
 document.querySelector(".start").addEventListener("click", start);
 document.querySelector(".size-menu").addEventListener("change", RenderScreen);
-document.querySelector(".algo-menu").addEventListener("change", RenderScreen);
+document.querySelector(".algo-menu").addEventListener("change", updateRunDetails);
+document.querySelector(".speed-menu").addEventListener("change", updateRunDetails);
 window.onload = RenderScreen;
